@@ -40,10 +40,24 @@
   Testing the server - run `npm run test-todoServer` command in terminal
  */
 const express = require('express');
+const fs = require('fs')
 const bodyParser = require('body-parser');
 
 const app = express();
 
 app.use(bodyParser.json());
+
+
+function createTodos(req,res) {
+    const data = req.body
+    console.log(data)
+
+
+}
+
+
+app.post('/todos',createTodos)
+
+
 
 module.exports = app;
