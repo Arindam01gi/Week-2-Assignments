@@ -42,22 +42,39 @@
 const express = require('express');
 const fs = require('fs')
 const bodyParser = require('body-parser');
-
 const app = express();
+const port = 3000
 
 app.use(bodyParser.json());
 
-
-function createTodos(req,res) {
-    const data = req.body
-    console.log(data)
+let todos = []
 
 
-}
+
+app.get('/todos',(req,res)=>{
+  res.json(todos)
+})
+
+app.post('/todos',(req,res) => {
+  const newTodo = {
+    id : Math.floor(Math.random()*10000),
+    title: req.body.title,
+    description: req.body.description
+  }
+  todos.push(newTodo)
+  res.status(201).json(newTodo)
+})
 
 
-app.post('/todos',createTodos)
+
+app.get('todos/:id',(req,res)=>{
+ const todo =  todos.find((todo)=> todo.id === req.params.id)
+ res.status(200).json(todo)
+})
 
 
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
 
 module.exports = app;
